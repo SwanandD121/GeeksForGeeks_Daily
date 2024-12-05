@@ -11,11 +11,9 @@ class GFG {
         while (t-- > 0) {
             String input = br.readLine();
             String[] inputArray = input.split("\\s+");
-            ArrayList<Integer> a = new ArrayList<>();
+            int a[] = new int[inputArray.length];
 
-            for (String s : inputArray) {
-                a.add(Integer.parseInt(s));
-            }
+            for (int i = 0; i < a.length; i++) a[i] = Integer.parseInt(inputArray[i]);
 
             Solution ob = new Solution();
             ob.sort012(a);
@@ -24,39 +22,29 @@ class GFG {
                 System.out.print(num + " ");
             }
             System.out.println();
+            System.out.println("~");
         }
     }
 }
+
 
 // } Driver Code Ends
-
-
 class Solution {
     // Function to sort an array of 0s, 1s, and 2s
-    public void sort012(ArrayList<Integer> arr) {
+    public void sort012(int[] arr) {
         // code here
-        int low = 0, mid = 0, high = arr.size() - 1;
-    
-        while (mid <= high) {
-            switch (arr.get(mid)) {
-                case 0:
-                    // Swap arr[low] and arr[mid] and move both pointers forward
-                    Collections.swap(arr, low, mid);
-                    low++;
-                    mid++;
-                    break;
-                    
-                case 1:
-                    // Just move the mid pointer forward
-                    mid++;
-                    break;
-                    
-                case 2:
-                    // Swap arr[mid] and arr[high] and move high pointer backward
-                    Collections.swap(arr, mid, high);
-                    high--;
-                    break;
-            }
+        int zc = 0, oc = 0, tc = 0;
+        for(int a : arr){
+            if(a == 0) zc++;
+            if(a == 1) oc++;
+            if(a == 2) tc++;
         }
+        for(int i = 0; i < zc; i++) arr[i] = 0;
+        for(int i = zc; i < zc+oc; i++) arr[i] = 1;
+        for(int i = zc+oc; i < zc+oc+tc; i++) arr[i] = 2;
+        
     }
 }
+
+//{ Driver Code Starts.
+// } Driver Code Ends
