@@ -13,19 +13,20 @@ class GFG {
             int k = Integer.parseInt(br.readLine().trim());
 
             String[] line1 = br.readLine().trim().split(" ");
-            int[] arr1 = new int[line1.length];
+            int[] a = new int[line1.length];
             for (int i = 0; i < line1.length; i++) {
-                arr1[i] = Integer.parseInt(line1[i]);
+                a[i] = Integer.parseInt(line1[i]);
             }
 
             String[] line2 = br.readLine().trim().split(" ");
-            int[] arr2 = new int[line2.length];
+            int[] b = new int[line2.length];
             for (int i = 0; i < line2.length; i++) {
-                arr2[i] = Integer.parseInt(line2[i]);
+                b[i] = Integer.parseInt(line2[i]);
             }
 
             Solution ob = new Solution();
-            System.out.println(ob.kthElement(k, arr1, arr2));
+            System.out.println(ob.kthElement(a, b, k));
+            System.out.println("~");
         }
     }
 }
@@ -36,33 +37,39 @@ class GFG {
 // User function Template for Java
 
 class Solution {
-    public long kthElement(int k, int arr1[], int arr2[]) {
+    public int kthElement(int a[], int b[], int k) {
         // code here
-        int n = arr1.length;
-        int m = arr2.length;
-        
-        if(k == n + m) return Math.max(arr1[n-1], arr2[m-1]);
-        if(k == 1) return Math.min(arr1[0], arr2[0]);
-        
-        int i = 0;
-        int j = 0;
-        while(i < n && j < m && k > 1){
-            if(arr1[i] <= arr2[j]) i++;
-            else j++;
-            k--;
+        int i = 0, j = 0; // Pointers for arrays a and b
+        int count = 0, ans = 0;
+
+        while (i < a.length && j < b.length) {
+            if (a[i] < b[j]) {
+                ans = a[i];
+                i++;
+            } else {
+                ans = b[j];
+                j++;
+            }
+            count++;
+            if (count == k) return ans;
         }
-        while(i < n && k > 1){
+
+        // If there are remaining elements in a[]
+        while (i < a.length) {
+            ans = a[i];
             i++;
-            k--;
+            count++;
+            if (count == k) return ans;
         }
-        while(j < m && k > 1){
+
+        // If there are remaining elements in b[]
+        while (j < b.length) {
+            ans = b[j];
             j++;
-            k--;
+            count++;
+            if (count == k) return ans;
         }
-        
-        if(i == n) return arr2[j];
-        else if(j == m) return arr1[i];
-        return Math.min(arr1[i], arr2[j]);
-        
+
+        return -1;
     }
 }
