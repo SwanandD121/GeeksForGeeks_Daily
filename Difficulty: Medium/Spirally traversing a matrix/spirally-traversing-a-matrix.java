@@ -20,6 +20,8 @@ class GFG {
             ArrayList<Integer> ans = ob.spirallyTraverse(matrix);
             for (Integer val : ans) System.out.print(val + " ");
             System.out.println();
+
+            System.out.println("~");
         }
     }
 }
@@ -28,50 +30,44 @@ class GFG {
 
 class Solution {
     // Function to return a list of integers denoting spiral traversal of matrix.
-    public ArrayList<Integer> spirallyTraverse(int matrix[][]) {
+    public ArrayList<Integer> spirallyTraverse(int mat[][]) {
         // code here
-        int r = matrix.length;
-        int c = matrix[0].length;
+        int rs = 0, cs = 0, re = mat.length - 1, ce = mat[0].length - 1;
         ArrayList<Integer> res = new ArrayList<>();
         
-        if(matrix == null || r == 0 || c == 0) return res;
-        
-        int sRow = 0;
-        int sCol = 0;
-        int eRow = r-1;
-        int eCol = c-1;
-        
-        while(sRow <= eRow && sCol <= eCol){
-            
+        while(rs <= re && cs <= ce) {
             // top
-            for(int i = sCol; i <= eCol; i++){
-                res.add(matrix[sRow][i]);
+            for(int i = cs; i <= ce; i++) {
+                res.add(mat[rs][i]);
             }
-            sRow++;
+            rs++;
             
-            // right
-            for(int i = sRow; i <= eRow; i++){
-                res.add(matrix[i][eCol]);
+            //right
+            for(int i = rs; i <= re; i++) {
+                res.add(mat[i][ce]);
             }
-            eCol--;
+            ce--;
             
-            // bottom
-            if(sRow <= eRow){
-                for(int i = eCol; i >= sCol; i--){
-                    res.add(matrix[eRow][i]);
+            //bottom
+            if(rs <= re) {
+                for(int i = ce; i >= cs; i--) {
+                    res.add(mat[re][i]);
                 }
+                re--;
             }
-            eRow--;
             
-            // left
-            if(sCol <= eCol){
-                for(int i = eRow; i >= sRow; i--){
-                    res.add(matrix[i][sCol]);
+            //left
+            if(cs <= ce) {
+                for(int i = re; i >= rs; i--) {
+                    res.add(mat[i][cs]);
                 }
+                cs++;
             }
-            sCol++;
+            
         }
         return res;
+        
+        
         
     }
 }
