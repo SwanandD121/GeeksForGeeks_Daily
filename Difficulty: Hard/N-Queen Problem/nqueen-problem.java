@@ -17,6 +17,16 @@ class GFG {
             if (ans.size() == 0)
                 System.out.println("-1");
             else {
+                ans.sort((list1, list2) -> {
+                    int size = Math.min(list1.size(), list2.size());
+                    for (int i = 0; i < size; i++) {
+                        if (!list1.get(i).equals(list2.get(i))) {
+                            return list1.get(i) - list2.get(i);
+                        }
+                    }
+                    return list1.size() - list2.size();
+                });
+
                 for (int i = 0; i < ans.size(); i++) {
                     System.out.print("[");
                     for (int j = 0; j < ans.get(i).size(); j++)
@@ -25,6 +35,8 @@ class GFG {
                 }
                 System.out.println();
             }
+
+            System.out.println("~");
         }
     }
 }
