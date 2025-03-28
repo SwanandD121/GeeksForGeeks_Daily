@@ -1,71 +1,61 @@
 //{ Driver Code Starts
-import java.io.*; 
-import java.util.*; 
-import java.lang.*;
+import java.io.*;
+import java.util.*;
 
-class Main
-{
-    public static void main (String[] args) throws IOException  
-    {
-        
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		//testcases
-		int t = Integer.parseInt(br.readLine().trim());
-		
-		while(t-- > 0)
-		{
-		    String inputLine[] = br.readLine().trim().split(" ");
-		    //size of array
-		    int n = Integer.parseInt(inputLine[0]);
-		    int start[] = new int[n];
-		    int end[] = new int[n];
-		    
-		    //adding elements to arrays start and end
-		    inputLine = br.readLine().trim().split(" ");
-		    for(int i = 0; i < n; i++)
-		     start[i] = Integer.parseInt(inputLine[i]);
-		    
-		    inputLine = br.readLine().trim().split(" ");
-		    for(int i= 0; i < n; i++)
-		      end[i] = Integer.parseInt(inputLine[i]);
-		    
-		    //function call
-		    System.out.println(new Solution().activitySelection(start, end, n));
-		}
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(reader.readLine().trim());
+
+        while (t-- > 0) {
+            // Read the start times
+            String[] startInput = reader.readLine().trim().split("\\s+");
+            int[] start = new int[startInput.length];
+            for (int i = 0; i < startInput.length; i++) {
+                start[i] = Integer.parseInt(startInput[i]);
+            }
+
+            // Read the end times
+            String[] endInput = reader.readLine().trim().split("\\s+");
+            int[] finish = new int[endInput.length];
+            for (int i = 0; i < endInput.length; i++) {
+                finish[i] = Integer.parseInt(endInput[i]);
+            }
+
+            // Create solution object and call activitySelection
+            Solution obj = new Solution();
+            System.out.println(obj.activitySelection(start, finish));
+            System.out.println("~");
+        }
     }
 }
-
 
 // } Driver Code Ends
 
 
-class Solution
-{
-    //Function to find the maximum number of activities that can
-    //be performed by a single person.
-    public static int activitySelection(int start[], int end[], int n)
-    {
-        // add your code here
+
+class Solution {
+    public int activitySelection(int[] start, int[] finish) {
+        // code here.
+        int n = start.length;
         int[][] activities = new int[n][2];
-
-        for(int i = 0; i < n; i++){
-            activities[i][0] = start[i];
-            activities[i][1] = end[i];
-        }
-
-        Arrays.sort(activities, Comparator.comparingDouble(o -> o[1]));
         
-        int maxActs = 1;
-        int lastEndingTime = activities[0][1];
-
-        for(int i = 1; i < n; i++){
-            if(activities[i][0] > lastEndingTime){
-                // select activity
-                maxActs++;
-                lastEndingTime = activities[i][1];
+        for (int i = 0; i < n; i++) {
+            activities[i][0] = start[i];
+            activities[i][1] = finish[i];
+        }
+        
+        Arrays.sort(activities, Comparator.comparingInt(a -> a[1]));
+        
+        int count = 1, lastEnd = activities[0][1];
+        
+        for (int i = 1; i < n; i++) {
+            if (activities[i][0] > lastEnd) {
+                count++;
+                lastEnd = activities[i][1];
             }
         }
-
-        return maxActs;
+        
+        return count;
     }
 }
